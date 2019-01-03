@@ -1,7 +1,8 @@
 package com.mdq.model
 
-class Person(val name: String) {
-    fun printName() {
+open class Person(var name: String) {
+
+    open fun printName() {
         println(name)
     }
 }
