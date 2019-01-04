@@ -1,5 +1,8 @@
 package com.mdq
 
+import com.mdq.collection.BaseA
+import com.mdq.collection.BaseB
+import com.mdq.collection.BaseC
 import com.mdq.delegate.Cat
 import com.mdq.delegate.Dog
 import com.mdq.ext.rename
@@ -16,6 +19,10 @@ fun main(args: Array<String>) {
     }
 
     Cat(Dog()).bark()
+
+    for (i in 1.rangeTo(100) step 20) {
+        print("$i,")
+    }
 
     println("hello kotlin")
     Person("mdq").printName()
@@ -90,7 +97,56 @@ fun main(args: Array<String>) {
     firstName?.let {  }
 
     com.mdq.util.Utils.isEmpty("")
+    people()
+
+    test
+
+    {x: Int, y: Int ->
+        println("${x + y}")
+    }(3, 5)
+
+    printTest.invoke("hello printTest")
+    printTest("hello printTest again")
+
+    log("printLog") { println(it) }
+
+    val mutableList: MutableList<BaseB> = mutableListOf(BaseB(), BaseB(), BaseC())
+    val lista: List<BaseA> = mutableList
+    lista.any { it == BaseA() }
 }
+
+val log = { str: String, printLog: (String) -> Unit ->
+    people()
+    printLog(str)
+}
+
+val printTest = { msg: String ->
+    println(msg)
+}
+
+// 不管在 Main 方法中是否调用，都会在初始化时，打印 yes，且打印在顶部(还没执行 main 之前就打印了)
+val test = if (5 > 3) {
+    println("yes")
+} else{
+    println("no")
+}
+
+/**
+ * 嵌套函数，用于可能出现递归的情况或者不希望外部函数的同级函数访问到的情况，一般不推荐使用
+ */
+fun people() {
+    val str = "hello"
+
+    fun say(count: Int = 10) {
+        println(str)
+        if (count > 0) {
+            say(count - 1)
+        }
+    }
+    say()
+}
+
+fun emptyMethod(str: String) = Unit
 
 fun case(obj: Any) {
     when(obj) {
